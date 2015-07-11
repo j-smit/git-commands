@@ -39,6 +39,7 @@ The `git clone` command copies an existing Git repository. This is sort of like 
 
 - `git clone <repo>` : Clone the repository located at <repo> onto the local machine.
 - `git clone <repo> <directory>` : Clone the repository located at <repo> into the folder called <directory> on the local machine.
+- `git clone --bare <repo>`: Create a duplicate of a repository without forking.
 
 
 #### `git config`
@@ -71,6 +72,9 @@ When options in these files conflict, local settings override user settings, whi
 	ci = commit
 	[core]
 	kueditor = vim
+	
+#### `git remote`
+- `git remote show origin`: Determine the origanal repo.
 	
 ### Saving changes (`git add` and `git commit`)
 These are the two commands that every Git user needs to understand, regardless of their team’s collaboration model. They are the means to record versions of a project into the repository’s history.
@@ -188,13 +192,20 @@ The git reset, git checkout, and git revert command are some of the most useful 
 
 
 
-
-
 ####Problem solving
 - Cannot rebase because of uncommitted changes
 	1. `git stash`: stores the different files away from everything else, returning your working directory to the last commit.
 	2. `git pull --rebase`
 	3. `git stash`: This will return those files to the working directory and allow you to work as before.
 
-	
+##Change from master to gh-pages steps
+1.	`git checkout -b gh-pages`
+2.	`git push origin gh-pages`
+3.	go to GitHub, settings for your repo, and switch “Default Branch” to gh-pages.
+4.	delete the local master branch with `git branch -d master`.
+5.	delete the remote master branch with `git push origin :master`.
+
+Done. You now have only the gh-pages branch, and it's the default one that git will use when talking with GitHub.
+
+
 	
