@@ -198,7 +198,7 @@ The git reset, git checkout, and git revert command are some of the most useful 
 	2. `git pull --rebase`
 	3. `git stash`: This will return those files to the working directory and allow you to work as before.
 
-##Change from master to gh-pages steps
+###Change from master to gh-pages steps
 1.	`git checkout -b gh-pages`
 2.	`git push origin gh-pages`
 3.	go to GitHub, settings for your repo, and switch “Default Branch” to gh-pages.
