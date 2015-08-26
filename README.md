@@ -51,6 +51,7 @@ The `--global` flag is used to set configuration options in all git repositories
 - `git config --global user.name <name>`: Define the author name to be used for all commits by the current user.
 - `git config --global user.email <email>`: Define the author email to be used for all commits by the current user.
 - `git config --global alias.<alias-name> <git-command>`: Create a shortcut for a Git command.
+- `git config --global --unset alias.<alias-name>`: Remove a shortcut(alias) from git config
 - `git config --system core.editor <editor>`: Define the text editor used by commands like git commit for all users on the current machine. The <editor> argument should be the command that launches the desired editor (e.g., vi).
 - `git config --global --edit`: Open the global configuration file in a text editor for manual editing.
 
@@ -183,12 +184,28 @@ If the two branches you‘re trying to merge both changed the same part of the s
 
 ##Advanced Tips
 
-###Reset, Checkout, and Revert
+###Revert and Reset
 The git reset, git checkout, and git revert command are some of the most useful tools in your Git toolbox. They all let you undo some kind of change in your repository, and the first two commands can be used to manipulate either commits or individual files.
 
+#### git revert
+
+The `git revert` command undoes a committed snapshot. But, instead of removing the commit from the project history, it figures out how to undo the changes introduced by the commit and appends a new commit with the resulting content.
+
+**Reverting has two important advantages over resetting:**
+
+1. First, it doesn’t change the project history, which makes it a “safe” operation.
+2. Second, `git revert` is able to target an individual commit at an arbitrary point in the history, whereas `git reset` can only work backwards from the current commit.  
+
+- `git revert <commit>`: Generate a new commit that undoes all of the changes introduced in <commit>, then apply it to the current branch.
+
 #### `git reset`
+If `git revert` is a “safe” way to undo changes, you can think of `git reset` as the dangerous method. When you undo with git reset(and the commits are no longer referenced by any ref or the reflog), there is no way to retrieve the original copy.
 
-
+- `git reset <file>`: Remove the specified file from the staging area, but leave the working directory unchanged. This unstages a file without overwriting any changes.
+- `git reset`: Reset the staging area to match the most recent commit, but leave the working directory unchanged. This unstages all files without overwriting any changes, giving you the opportunity to re-build the staged snapshot from scratch.
+- `git reset --hard`: Reset the staging area and the working directory to match the most recent commit. In addition to unstaging changes, the --hard flag tells Git to overwrite all changes in the working directory, too.
+- `git reset <commit>`: Move the current branch tip backward to <commit>, reset the staging area to match, but leave the working directory alone.
+- `git reset --hard <commit>`: Move the current branch tip backward to <commit> and reset both the staging area and the working directory to match. This obliterates not only the uncommitted changes, but all commits after <commit>, as well.
 
 
 
@@ -198,7 +215,7 @@ The git reset, git checkout, and git revert command are some of the most useful 
 	2. `git pull --rebase`
 	3. `git stash`: This will return those files to the working directory and allow you to work as before.
 
-###Change from master to gh-pages steps
+##Change from master to gh-pages steps
 1.	`git checkout -b gh-pages`
 2.	`git push origin gh-pages`
 3.	go to GitHub, settings for your repo, and switch “Default Branch” to gh-pages.
